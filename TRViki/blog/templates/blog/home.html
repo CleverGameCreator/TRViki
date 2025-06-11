@@ -1,0 +1,74 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block title %}ТР Вики - Главная страница{% endblock %}
+
+{% block extra_head %}
+<style>
+    .hero {
+        text-align: center;
+        padding: 40px 0;
+        margin-bottom: 30px;
+        background-color: #f0f8ff;
+        border-radius: 5px;
+    }
+    
+    .hero h1 {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+    }
+    
+    .hero p {
+        font-size: 1.2em;
+        color: #555;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .recent-posts {
+        margin-bottom: 40px;
+    }
+    
+    .recent-posts h2 {
+        border-bottom: 2px solid #eee;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .all-posts-link {
+        display: block;
+        text-align: center;
+        margin-top: 30px;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="hero">
+        <h1>Добро пожаловать на ТР Вики</h1>
+        <p>Ваш источник информации и последних новостей</p>
+    </div>
+    
+    <div class="recent-posts">
+        <h2>Последние записи</h2>
+        
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post">
+                    <h2>
+                        <a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a>
+                    </h2>
+                    <div class="post-meta">
+                        {{ post.date }} | Автор: {{ post.author }}
+                    </div>
+                    <p>{{ post.description|truncatewords:50 }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Нет доступных записей.</p>
+        {% endif %}
+        
+        <a href="{% url 'blog:post_list' %}" class="all-posts-link">Смотреть все записи →</a>
+    </div>
+{% endblock %} 

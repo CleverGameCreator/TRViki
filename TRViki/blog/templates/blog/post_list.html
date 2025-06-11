@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Все записи блога{% endblock %}
+
+{% block content %}
+    <h1>Все записи</h1>
+    
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post">
+                <h2>
+                    <a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a>
+                </h2>
+                <div class="post-meta">
+                    {{ post.date }} | Автор: {{ post.author }}
+                </div>
+                <p>{{ post.description|truncatewords:30 }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Нет доступных постов.</p>
+    {% endif %}
+{% endblock %} 
